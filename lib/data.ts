@@ -1,4 +1,4 @@
-import { MetricData, RevenueData, UserData, ConversionData, TableData } from './types';
+import { MetricData, TableData } from './types';
 
 export const generateMetrics = (): MetricData[] => [
   {
@@ -39,32 +39,7 @@ export const generateMetrics = (): MetricData[] => [
   }
 ];
 
-export const revenueData: RevenueData[] = [
-  { month: 'Jan', revenue: 255000, previousYear: 225000 },
-  { month: 'Feb', revenue: 445000, previousYear: 395000 },
-  { month: 'Mar', revenue: 478000, previousYear: 420000 },
-  { month: 'Apr', revenue: 465000, previousYear: 445000 },
-  { month: 'May', revenue: 350000, previousYear: 425000 },
-  { month: 'Jun', revenue: 520000, previousYear: 485000 },
-  { month: 'Jul', revenue: 545000, previousYear: 495000 },
-  { month: 'Aug', revenue: 535000, previousYear: 510000 },
-  { month: 'Sep', revenue: 568000, previousYear: 525000 },
-  { month: 'Oct', revenue: 585000, previousYear: 540000 },
-  { month: 'Nov', revenue: 612000, previousYear: 565000 },
-  { month: 'Dec', revenue: 635000, previousYear: 580000 }
-];
 
-
-
-
-export const conversionData: ConversionData[] = [
-  { channel: 'Google Ads', conversions: 1250, color: '#3B82F6' },
-  { channel: 'Facebook', conversions: 850, color: '#10B981' },
-  { channel: 'Instagram', conversions: 620, color: '#F59E0B' },
-  { channel: 'LinkedIn', conversions: 380, color: '#EF4444' },
-  { channel: 'Twitter', conversions: 290, color: '#8B5CF6' },
-  { channel: 'Email', conversions: 450, color: '#06B6D4' }
-];
 
 export const generateTableData = (): TableData[] => [
   {
