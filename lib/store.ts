@@ -7,6 +7,7 @@ export interface FilterState {
     from?: Date;
     to?: Date;
   };
+  searchTerm: string;
   status: string;
   minRevenue: string;
   maxRevenue: string;
@@ -26,7 +27,6 @@ interface DashboardState {
   filters: FilterState;
   
   // Table controls
-  searchTerm: string;
   sortField: keyof TableData;
   sortDirection: 'asc' | 'desc';
   currentPage: number;
@@ -42,7 +42,6 @@ interface DashboardState {
   setFilters: (filters: FilterState) => void;
   updateFilter: (key: keyof FilterState, value: any) => void;
   clearAllFilters: () => void;
-  setSearchTerm: (term: string) => void;
   setSortField: (field: keyof TableData) => void;
   setSortDirection: (direction: 'asc' | 'desc') => void;
   setCurrentPage: (page: number) => void;
@@ -67,6 +66,7 @@ const initialFilters: FilterState = {
   maxRevenue: '',
   minCost: '',
   maxCost: '',
+  searchTerm: '',
 };
 
 export const useDashboardStore = create<DashboardState>((set, get) => ({
@@ -104,10 +104,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
     get().applyFiltersAndSort();
   },
   
-  setSearchTerm: (term) => {
-    set({ searchTerm: term, currentPage: 1 });
-    get().applyFiltersAndSort();
-  },
+
   
   setSortField: (field) => {
     const { sortField, sortDirection } = get();
@@ -157,7 +154,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   },
 
   updateDataRealTime: () => {
-    const { tableData, filters } = get();
+    const { tableData, filters, filteredTableData } = get();
     
     // Skip real-time updates if filtering by 'Completed' or 'Paused' status
     if (filters.status === 'Completed' || filters.status === 'Paused') {
@@ -165,10 +162,9 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
     }
     
     // Also skip if no active campaigns in the data
-    if (!tableData.some(item => item.status === 'Active')) {
+    if (!filteredTableData.some(item => item.status === 'Active')) {
       return;
     }
-    
     const updatedData = generateRealTimeTableData(tableData);
     set({ tableData: updatedData });
     get().applyFiltersAndSort();
@@ -180,8 +176,8 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   },
 
   applyFiltersAndSort: () => {
-    const { tableData, searchTerm, filters, sortField, sortDirection } = get();
-    
+    const { tableData, filters, sortField, sortDirection } = get();
+    const searchTerm = filters.searchTerm;
     let filtered = tableData.filter(item => {
       // Search filter
       const matchesSearch = searchTerm === '' || 

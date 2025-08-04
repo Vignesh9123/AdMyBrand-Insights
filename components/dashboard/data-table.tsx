@@ -20,12 +20,11 @@ import { useDashboardStore } from '@/lib/store';
 interface DataTableProps {}
 
 export function DataTable({}: DataTableProps) {
-  const searchTerm = useDashboardStore((s) => s.searchTerm);
   const currentPage = useDashboardStore((s) => s.currentPage);
   const filters = useDashboardStore((s) => s.filters);
+  const updateFilter = useDashboardStore((s) => s.updateFilter);
   const filteredTableData = useDashboardStore((s) => s.filteredTableData);
   const itemsPerPage = useDashboardStore((s) => s.itemsPerPage);
-  const setSearchTerm = useDashboardStore((s) => s.setSearchTerm);
   const setSortField = useDashboardStore((s) => s.setSortField);
   const setCurrentPage = useDashboardStore((s) => s.setCurrentPage);
   const getTotalPages = useDashboardStore((s) => s.getTotalPages);
@@ -71,12 +70,12 @@ export function DataTable({}: DataTableProps) {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search campaigns..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={filters.searchTerm}
+                onChange={(e) => updateFilter('searchTerm', e.target.value)}
                 className="pl-9 w-full sm:w-64"
               />
             </div>
-            <Select value={filters.status} onValueChange={() => {}}>
+            <Select value={filters.status} onValueChange={(value) => updateFilter('status', value)}>
               <SelectTrigger className="w-full sm:w-32">
                 <SelectValue />
               </SelectTrigger>
