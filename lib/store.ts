@@ -80,7 +80,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   sortDirection: 'desc',
   currentPage: 1,
   itemsPerPage: 10,
-  isLoading: false,
+  isLoading: true,
 
   // Actions
   setTableData: (data) => set({ tableData: data }),
@@ -145,8 +145,9 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   },
 
   // Data operations
-  loadInitialData: () => {
+  loadInitialData: async() => {
     set({ isLoading: true });
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate data loading
     const data = generateTableData();
     const metrics = generateMetrics();
     set({ tableData: data, metrics, isLoading: false });

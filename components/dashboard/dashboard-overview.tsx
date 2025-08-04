@@ -14,9 +14,7 @@ import { useDashboardStore } from '@/lib/store';
 
 export function DashboardOverview() {
   const isLoading = useDashboardStore((s) => s.isLoading);
-  const getActiveFiltersCount = useDashboardStore((s) => s.getActiveFiltersCount);  
 
-  
   const handleExportPDF = useCallback(() => {
     const filteredTableData = useDashboardStore.getState().filteredTableData;
     exportToPDF(filteredTableData,`admybrand-insights-report-${new Date().toLocaleDateString()}`);
@@ -30,6 +28,8 @@ export function DashboardOverview() {
   if (isLoading) {
     return <DashboardSkeleton />;
   }
+
+
 
 
   return (

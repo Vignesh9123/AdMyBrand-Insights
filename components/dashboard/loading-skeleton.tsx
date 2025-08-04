@@ -92,11 +92,14 @@ export function DashboardSkeleton() {
 
       {/* Charts Grid */}
       <div className="grid gap-6 lg:grid-cols-3">
-        <div className="col-span-full lg:col-span-2">
-          <ChartSkeleton height={350} />
+        <div className="col-span-2">
+          <ChartSkeleton height={300} />
         </div>
         <ChartSkeleton height={300} />
+        <div className="col-span-full">
+
         <ChartSkeleton height={300} />
+        </div>
       </div>
 
       {/* Data Table */}
