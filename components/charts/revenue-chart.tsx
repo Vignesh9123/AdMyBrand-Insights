@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { revenueData } from '@/lib/mock-data';
 
@@ -36,22 +36,45 @@ export function RevenueChart() {
             tickLine={false}
             tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
           />
-          <ChartTooltip 
+          {/* <ChartTooltip 
             content={
               <ChartTooltipContent 
-                formatter={(value) => [`$${value.toLocaleString()} `, 'Revenue']}
+                formatter={(value, name) => [name=='value'?`${new Date().getFullYear()}`:`${new Date().getFullYear() - 1}`, ' : ',`$${value.toLocaleString()} `, 'Revenue']}
                 labelFormatter={(label) => `Month: ${currentMonth.includes(label) ? `${label}*` : label}`}
+                
               />
             }
-          />
+          /> */}
+           <Tooltip 
+              formatter={(value: number, name) => [`$${value.toLocaleString()}`,name]}
+              labelClassName="text-muted-foreground"
+              contentStyle={{
+                backgroundColor: 'hsl(var(--card))',
+                border: '1px solid hsl(var(--border))',
+                borderRadius: '8px'
+              }}
+            />
           <Line
             type="monotone"
             dataKey="value"
-            stroke="url(#revenueGradient)"
+            stroke="hsl(var(--chart-1)"
             strokeWidth={3}
             dot={{ fill: "hsl(var(--chart-1))", strokeWidth: 0, r: 4 }}
-            activeDot={{ r: 6, fill: "hsl(var(--chart-1))", strokeWidth: 3, stroke: "hsl(var(--chart-1))" }}
+            activeDot={{ r: 6, fill: "hsl(var(--chart-1))", strokeWidth: 3, stroke: "gray" }}
+            name="2025"
           />
+          <Line
+            type="monotone"
+            dataKey="previousYear"
+            stroke="gray"
+            strokeWidth={3}
+            strokeDasharray="5 5"
+            dot={{ fill: "gray", strokeWidth: 0, r: 4 }}
+            activeDot={{ r: 6, fill: "gray", strokeWidth: 3, stroke: "hsl(var(--gray))" }}
+            name="2025"
+          />
+          <Legend />
+
         </LineChart>
       </ResponsiveContainer>
     </ChartContainer>
