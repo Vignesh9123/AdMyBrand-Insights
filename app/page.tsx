@@ -2,17 +2,6 @@
 
 import { NavbarDemo as Header } from '@/components/dashboard/header';
 import { DashboardOverview } from '@/components/dashboard/dashboard-overview';
-import {
-  Navbar,
-  NavBody,
-  NavItems,
-  MobileNav,
-  NavbarLogo,
-  NavbarButton,
-  MobileNavHeader,
-  MobileNavToggle,
-  MobileNavMenu,
-} from "@/components/ui/resizable-navbar";
 import { useEffect } from 'react';
 import { useDashboardStore } from '@/lib/store';
 
@@ -20,6 +9,7 @@ import { useDashboardStore } from '@/lib/store';
 export default function Home() {
   const loadInitialData = useDashboardStore((s) => s.loadInitialData);
   const updateDataRealTime = useDashboardStore((s) => s.updateDataRealTime);
+  const updateMetricsRealTime = useDashboardStore((s) => s.updateMetricsRealTime);
 
   useEffect(() => {
     // Load initial data
@@ -28,6 +18,7 @@ export default function Home() {
     // Set up real-time updates every 3 seconds
     const interval = setInterval(() => {
       updateDataRealTime();
+      updateMetricsRealTime();
     }, 3000);
 
     return () => clearInterval(interval);
