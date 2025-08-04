@@ -7,8 +7,7 @@ import {
   MobileNavHeader,
 } from "@/components/ui/resizable-navbar";
 import ThemeToggle from "../ui/theme-toggle";
-import { useEffect } from "react";
-export function NavbarDemo({ children }: { children: React.ReactNode }) {
+export function MainContainer({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="relative w-full">
