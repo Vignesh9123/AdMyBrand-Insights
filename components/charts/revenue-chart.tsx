@@ -40,6 +40,7 @@ export function RevenueChart() {
               formatter={(value: number, name) => [`$${value.toLocaleString()}`,name]}
               labelClassName="text-muted-foreground"
               labelFormatter={(label) => `Month: ${currentMonth.includes(label) ? `${label}*` : label}`}
+              itemSorter={()=>-1}
               contentStyle={{
                 backgroundColor: 'hsl(var(--card))',
                 border: '1px solid hsl(var(--border))',
@@ -53,7 +54,7 @@ export function RevenueChart() {
             strokeWidth={3}
             dot={{ fill: "hsl(var(--chart-1))", strokeWidth: 0, r: 4 }}
             activeDot={{ r: 6, fill: "hsl(var(--chart-1))", strokeWidth: 3, stroke: "gray" }}
-            name="2025"
+            name={`${new Date().getFullYear()}`}
           />
           <Line
             type="monotone"
@@ -63,7 +64,7 @@ export function RevenueChart() {
             strokeDasharray="5 5"
             dot={{ fill: "gray", strokeWidth: 0, r: 4 }}
             activeDot={{ r: 6, fill: "gray", strokeWidth: 3, stroke: "hsl(var(--gray))" }}
-            name="2025"
+            name={`${new Date().getFullYear() - 1}`}
           />
           <Legend />
 
