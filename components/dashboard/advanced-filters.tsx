@@ -98,8 +98,8 @@ export function AdvancedFilters({
         <CollapsibleContent>
           <CardContent className="pt-0">
             <div className="grid gap-6">
-              {/* Date Range */}
-              <div className="space-y-2">
+              {/* Date Range (Can be added in the future)*/}
+              {/* <div className="space-y-2">
                 <Label className="text-sm font-medium flex items-center">
                   <Calendar className="h-4 w-4 mr-2" />
                   Date Range
@@ -115,8 +115,8 @@ export function AdvancedFilters({
                     onDateChange={(date) => updateDateRange('to', date)}
                     placeholder="To date"
                   />
-                </div>
-              </div>
+                </div> 
+               </div> */ }
 
               <Separator />
 

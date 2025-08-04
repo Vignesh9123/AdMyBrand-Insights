@@ -36,18 +36,10 @@ export function RevenueChart() {
             tickLine={false}
             tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
           />
-          {/* <ChartTooltip 
-            content={
-              <ChartTooltipContent 
-                formatter={(value, name) => [name=='value'?`${new Date().getFullYear()}`:`${new Date().getFullYear() - 1}`, ' : ',`$${value.toLocaleString()} `, 'Revenue']}
-                labelFormatter={(label) => `Month: ${currentMonth.includes(label) ? `${label}*` : label}`}
-                
-              />
-            }
-          /> */}
            <Tooltip 
               formatter={(value: number, name) => [`$${value.toLocaleString()}`,name]}
               labelClassName="text-muted-foreground"
+              labelFormatter={(label) => `Month: ${currentMonth.includes(label) ? `${label}*` : label}`}
               contentStyle={{
                 backgroundColor: 'hsl(var(--card))',
                 border: '1px solid hsl(var(--border))',
