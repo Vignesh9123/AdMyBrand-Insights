@@ -115,7 +115,7 @@ Main dashboard component that orchestrates all dashboard elements including char
 - **Growth Rate Metric**: Shows user growth rate with change indicator vs previous month
 
 ### Charts
-- **Revenue Chart**: Line chart showing revenue trends
+- **Revenue Chart**: Line chart showing revenue trends with previous year comparison
 - **Traffic Chart**: Pie chart for traffic sources
 - **Users Chart**: Line chart for user growth metrics
 
