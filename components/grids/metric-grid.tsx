@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { MetricCard } from '../dashboard/metric-card'
-import { MetricData } from '@/lib/types';
-import { generateMetrics } from '@/lib/data';
+import { useDashboardStore } from '@/lib/store';
 
 function MetricGrid() {
-    const [metrics, setMetrics] = useState<MetricData[]>([]);
+    const metrics = useDashboardStore((state) => state.metrics);
+    const loadInitialData = useDashboardStore((state) => state.loadInitialData);
+    const updateMetricsRealTime = useDashboardStore((state) => state.updateMetricsRealTime);
 
     useEffect(() => {
         // Initial data load
-        setMetrics(generateMetrics());
+        loadInitialData();
 
-    
         // Real-time updates every 3 seconds
         const interval = setInterval(() => {
-          setMetrics(generateMetrics());
+          updateMetricsRealTime();
         }, 3000);
-    
+
         return () => clearInterval(interval);
-      }, []);
+      }, [loadInitialData, updateMetricsRealTime]);
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

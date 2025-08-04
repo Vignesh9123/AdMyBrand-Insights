@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { TableData } from './types';
-import { generateTableData, generateRealTimeTableData } from './data';
+import { TableData, MetricData } from './types';
+import { generateTableData, generateRealTimeTableData, generateMetrics } from './data';
 
 export interface FilterState {
   dateRange: {
@@ -19,6 +19,9 @@ interface DashboardState {
   tableData: TableData[];
   filteredTableData: TableData[];
   
+  // Metrics data
+  metrics: MetricData[];
+  
   // Filters
   filters: FilterState;
   
@@ -35,6 +38,7 @@ interface DashboardState {
   // Actions
   setTableData: (data: TableData[]) => void;
   setFilteredTableData: (data: TableData[]) => void;
+  setMetrics: (metrics: MetricData[]) => void;
   setFilters: (filters: FilterState) => void;
   updateFilter: (key: keyof FilterState, value: any) => void;
   clearAllFilters: () => void;
@@ -52,6 +56,7 @@ interface DashboardState {
   // Data operations
   loadInitialData: () => void;
   updateDataRealTime: () => void;
+  updateMetricsRealTime: () => void;
   applyFiltersAndSort: () => void;
 }
 
@@ -68,6 +73,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   // Initial state
   tableData: [],
   filteredTableData: [],
+  metrics: [],
   filters: initialFilters,
   searchTerm: '',
   sortField: 'revenue',
@@ -79,6 +85,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   // Actions
   setTableData: (data) => set({ tableData: data }),
   setFilteredTableData: (data) => set({ filteredTableData: data }),
+  setMetrics: (metrics) => set({ metrics }),
   
   setFilters: (filters) => {
     set({ filters, currentPage: 1 }); // Reset to first page when filters change
@@ -144,7 +151,8 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   loadInitialData: () => {
     set({ isLoading: true });
     const data = generateTableData();
-    set({ tableData: data, isLoading: false });
+    const metrics = generateMetrics();
+    set({ tableData: data, metrics, isLoading: false });
     get().applyFiltersAndSort();
   },
 
@@ -164,6 +172,11 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
     const updatedData = generateRealTimeTableData(tableData);
     set({ tableData: updatedData });
     get().applyFiltersAndSort();
+  },
+
+  updateMetricsRealTime: () => {
+    const metrics = generateMetrics();
+    set({ metrics });
   },
 
   applyFiltersAndSort: () => {
